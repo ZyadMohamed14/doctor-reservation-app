@@ -1,9 +1,17 @@
 import 'package:docapp/core/helpers/spacing.dart';
 import 'package:docapp/core/themeing/styles.dart';
+import 'package:docapp/feature/login/ui/widgets/already_have_account_text.dart';
+import 'package:docapp/feature/login/ui/widgets/email_and_password.dart';
+import 'package:docapp/feature/login/ui/widgets/login_bloc_listener.dart';
+import 'package:docapp/feature/login/ui/widgets/terms_and_conditions_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/widget/app_text_button.dart';
 import '../../../core/widget/app_text_from_feild.dart';
+import '../data/model/login_request_body.dart';
+import '../logic/logic/cubit/login_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,9 +21,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
-  bool isObscusr = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 Text(
                   "Welcome Back",
                   style: TextStyles.font32BlueBold,
@@ -36,36 +42,40 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyles.font14GrayRegular,
                 ),
                 verticalSpace(36),
-                Form(
-                    child: Column(children: [
-                  AppTextFormField(
-                    hintText: "Email",
-                  ),
-                  verticalSpace(16),
-                  AppTextFormField(
-                    hintText: "Password",
-                    isObscureText: isObscusr,
-                    suffixIcon: GestureDetector(
-                      onTap: () => {
-                        setState(() {
-                          isObscusr = !isObscusr;
-                        })
-                      },
-                      child: Icon(
-                          isObscusr ? Icons.visibility_off : Icons.visibility),
-                    ),
-                  ),
+                EmailAndPassword(),
                   verticalSpace(24),
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: Text("Forget Password", style: TextStyles.font13BlueRegular,),
-                  )
-                ]))
+                  ),
+                verticalSpace(40),
+                AppTextButton(
+                  buttonText: "Login",
+                  textStyle: TextStyles.font16WhiteSemiBold,
+                  onPressed: () {
+                    validateThenDoLogin(context);
+                  },
+                ),
+                verticalSpace(16),
+                const TermsAndConditionsText(),
+                verticalSpace(60),
+                const AlreadyHaveAccountText(),
+                LoginBlocListener()
               ],
             ),
           ),
         ),
       ),
     );
+  }
+  void validateThenDoLogin(BuildContext context) {
+    if (context.read<LoginCubit>().formKey.currentState!.validate()) {
+      context.read<LoginCubit>().emitLoginStates(
+        LoginRequestBody(
+          email: context.read<LoginCubit>().emailController.text,
+          password: context.read<LoginCubit>().passwordController.text,
+        ),
+      );
+    }
   }
 }
