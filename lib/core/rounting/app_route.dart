@@ -6,26 +6,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../feature/home/ui/home_screen.dart';
 import '../../feature/login/ui/login_screen.dart';
 import '../../feature/onboardind/ui/screen/onboarding_screen.dart';
+import '../../feature/signup/domain/sign_up_cubit.dart';
+import '../../feature/signup/presentattion/sign_up_screen.dart';
 import '../di/dependency_injection.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
-    //this arguments to be passed in any screen like this ( arguments as ClassName )
-    final arguments = settings.arguments;
 
     switch (settings.name) {
-      case Routes.onBoardingScreen:
+      case DocRoutes.onBoardingScreen:
         return MaterialPageRoute(
           builder: (_) => OnboardingScreen(),
         );
-      case Routes.loginScreen:
+      case DocRoutes.loginScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<LoginCubit>(),
             child: const LoginScreen(),
           ),
         );
-      case Routes.homeScreen:
+      case DocRoutes.signUpScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<SignupCubit>(),
+            child: const SignupScreen(),
+          ),
+        );
+      case DocRoutes.homeScreen:
         return MaterialPageRoute(
           builder: (_) => const HomeScreen(),
         );

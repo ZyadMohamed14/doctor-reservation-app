@@ -46,14 +46,14 @@ class PasswordValidations extends StatelessWidget{
       children: [
         CircleAvatar(
         radius: 2.5,
-        backgroundColor: ColorsManager.gray,
+        backgroundColor: hasVaildateEntryData?Colors.green : ColorsManager.gray
     ),
         horizontalSpace(6),
         Text(text,style: TextStyles.font13BlueRegular.copyWith(
-          decoration: hasVaildateEntryData?TextDecoration.lineThrough:null,
+       //   decoration: hasVaildateEntryData?TextDecoration.lineThrough:null,
           decorationColor: Colors.green,
             decorationThickness:2,
-          color: hasVaildateEntryData ? ColorsManager.gray : ColorsManager.darkBlue,
+          color: hasVaildateEntryData ? Colors.green : ColorsManager.gray,
         ),)
       ],
     );

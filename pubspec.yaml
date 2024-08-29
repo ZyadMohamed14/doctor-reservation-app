@@ -62,6 +62,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   #A build system for Dart code generation and modular compilation
   build_runner: ^2.4.7
+  intl_phone_field: ^3.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

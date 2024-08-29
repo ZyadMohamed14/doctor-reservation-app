@@ -53,7 +53,7 @@ class GetStartedButton extends StatelessWidget {
     // TODO: implement build
     return TextButton(
       onPressed: () {
-        context.pushNamed(Routes.loginScreen);
+        context.pushNamed(DocRoutes.loginScreen);
       },
    style: ButtonStyle(
      backgroundColor: MaterialStateProperty.all(ColorsManager.mainBlue),
