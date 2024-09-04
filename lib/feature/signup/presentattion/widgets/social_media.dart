@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'dart:io';
 class SocialLoginIcons extends StatelessWidget {
   const SocialLoginIcons({Key? key}) : super(key: key);
 
@@ -26,13 +26,14 @@ class SocialLoginIcons extends StatelessWidget {
           ),
           onPressed: () {}, // Replace with your Facebook login logic
         ),
-        IconButton(
-          icon: SvgPicture.asset(
-            'assets/svgs/apple.svg', // Replace with your Apple logo path
-            height: 32.sp,
+        if (Platform.isIOS) // Conditionally show the Apple icon if on iOS
+               IconButton(
+            icon: SvgPicture.asset(
+              'assets/svgs/apple.svg', // Replace with your Apple logo path
+              height: 32.sp,
+            ),
+            onPressed: () {}, // Replace with your Apple login logic
           ),
-          onPressed: () {}, // Replace with your Apple login logic
-        ),
       ],
     );
   }
