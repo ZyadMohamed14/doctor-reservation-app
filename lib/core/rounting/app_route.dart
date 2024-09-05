@@ -3,6 +3,7 @@ import 'package:docapp/feature/login/logic/logic/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../feature/home/domain/home_cubit.dart';
 import '../../feature/home/ui/home_screen.dart';
 import '../../feature/login/ui/login_screen.dart';
 import '../../feature/onboardind/ui/screen/onboarding_screen.dart';
@@ -14,6 +15,7 @@ class AppRouter {
   Route generateRoute(RouteSettings settings) {
 
     switch (settings.name) {
+
       case DocRoutes.onBoardingScreen:
         return MaterialPageRoute(
           builder: (_) => OnboardingScreen(),
@@ -34,8 +36,12 @@ class AppRouter {
         );
       case DocRoutes.homeScreen:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => BlocProvider(
+            create: (context) => HomeCubit(getIt())..getSpecializations(),
+            child: const HomeScreen(),
+          ),
         );
+
       default:
         return MaterialPageRoute(
           builder: (_) =>
